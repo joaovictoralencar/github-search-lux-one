@@ -1,5 +1,10 @@
 <template>
-  <button class="btn" :class="hoverAnim ? 'animated' : ''">
+  <button
+    v-if="submitButton"
+    class="btn"
+    :class="hoverAnim ? 'animated' : ''"
+    :type="submitButton ? 'submit' : 'button'"
+  >
     <slot />
   </button>
 </template>
@@ -11,6 +16,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    submitButton: {
+      type: Boolean,
+      default: false,
+    },
+    onClick: {
+      type: Function,
+      default() {
+        console.log('give-me a function')
+      },
+    },
   },
 }
 </script>
@@ -20,9 +35,11 @@ export default {
   border: none;
   border-style: none;
   outline: none;
+  transition: transform 0.1s ease-in;
   &:hover {
     cursor: pointer;
   }
+
   &.animated {
     transition: transform 0.1s ease-in;
     &:hover,
