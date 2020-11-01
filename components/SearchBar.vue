@@ -54,7 +54,7 @@ export default {
         .$get(
           'https://api.github.com/search/users?q=' +
             this.userSearch +
-            '+in:user'
+            '+in:user&per_page=100'
         )
         .then((resp) => {
           this.$router.push({
@@ -62,6 +62,7 @@ export default {
             path: '/searchResult',
             params: {
               result: resp,
+              userSearch: this.userSearch,
             },
           })
           console.log(resp)

@@ -45,4 +45,11 @@ html {
   font-style: italic;
   font-weight: normal;
 }
+h3 {
+  font-size: 1.25rem;
+}
+h4 {
+  font-size: 1rem;
+  font-weight: 300;
+}
 </style>
