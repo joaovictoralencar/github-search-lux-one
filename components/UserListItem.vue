@@ -8,7 +8,7 @@
           :alt="user.login + ' avatar'"
         />
       </a>
-      <div v-else role="loading image"></div>
+      <LoadingItem v-else class="load-image-animation" role="loading image" />
       <div v-if="endLoading" class="user-info">
         <header class="user-info-header">
           <a :href="'https://github.com/' + user.login" class="user-name text-1"
@@ -21,7 +21,7 @@
         <p class="text-2">Seguidores {{ user.followers }}</p>
         <p class="text-2">Seguindo: {{ user.following }}</p>
       </div>
-      <div v-else class="load-info-animation" role="loading info"></div>
+      <LoadingItem v-else class="load-info-animation" role="loading info" />
     </section>
     <div class="separator-line"></div>
   </li>
@@ -43,16 +43,17 @@ export default {
       this.user = await this.$axios.$get(this.userResult.url).catch((err) => {
         console.error(err)
       })
+      console.log(this.user)
     }
   },
   data() {
     return {
-      user: {},
+      user: null,
     }
   },
   computed: {
     endLoading() {
-      return this.user !== {}
+      return this.user !== null
     },
   },
   mounted() {
