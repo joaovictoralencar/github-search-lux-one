@@ -1,6 +1,9 @@
 <template>
   <li class="user-list-item">
-    <section class="user-list-item-container">
+    <section
+      class="user-list-item-container"
+      :class="!endLoading ? 'loading' : ''"
+    >
       <a v-if="endLoading" :href="'https://github.com/' + user.login">
         <img
           class="user-avatar"
@@ -43,7 +46,6 @@ export default {
       this.user = await this.$axios.$get(this.userResult.url).catch((err) => {
         console.error(err)
       })
-      console.log(this.user)
     }
   },
   data() {
@@ -98,7 +100,21 @@ export default {
         text-align: left;
       }
     }
+    .load-image-animation {
+      @include flex-center();
+      outline: 2px solid $black;
+      width: 95.1px;
+      height: 84px;
+    }
     .load-info-animation {
+      @include flex-center();
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+    &.loading {
+      align-items: center;
     }
   }
   .separator-line {
