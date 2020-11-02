@@ -17,9 +17,9 @@
           >
           <div class="text-2">{{ user.location }}</div>
         </header>
-        <p class="text-2">Public repositories: {{ user.public_repos }}</p>
-        <p class="text-2">Followers {{ user.followers }}</p>
-        <p class="text-2">Following: {{ user.following }}</p>
+        <p class="text-2">Repositórios públicos: {{ user.public_repos }}</p>
+        <p class="text-2">Seguidores {{ user.followers }}</p>
+        <p class="text-2">Seguindo: {{ user.following }}</p>
       </div>
       <div v-else class="load-info-animation" role="loading info"></div>
     </section>
