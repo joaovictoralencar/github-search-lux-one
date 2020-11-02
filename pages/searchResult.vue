@@ -4,16 +4,23 @@
       <h2 class="title medium">
         Github <span class="title title-span-style">Search</span>
       </h2>
-      <SearchBar :is-big="false" class="search-bar" />
-      <section>
+      <SearchBar :is-big="false" class="search-bar" @newSearch="newSearch" />
+      <section v-if="result">
         <h3>Resultado da busca:</h3>
         <h4>{{ result.total_count }} resultados para "{{ userSearch }}"</h4>
+        <div role="separator" class="separator-line"></div>
       </section>
     </header>
     <section class="content">
-      <ul>
-        <li v-for="user in users" :key="user.id">{{ user.login }}</li>
-      </ul>
+      <nav>
+        <ul class="users-list">
+          <UserListItem
+            v-for="user in users"
+            :key="user.id"
+            :user-result="user"
+          ></UserListItem>
+        </ul>
+      </nav>
     </section>
   </main>
 </template>
@@ -35,6 +42,13 @@ export default {
     // only define users if the search
     if (this.result) this.users = this.result.items
   },
+  methods: {
+    newSearch(params) {
+      this.result = params.result
+      this.userSearch = params.userSearch
+      if (this.result) this.users = this.result.items
+    },
+  },
 }
 </script>
 
@@ -46,7 +60,7 @@ export default {
   width: 100%;
   min-width: 460px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   text-align: left;
   flex-direction: column;
@@ -58,6 +72,14 @@ export default {
   }
   .content {
     width: 100%;
+  }
+  .separator-line {
+    margin: 9.5px 0 17.5px 0;
+  }
+  .users-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
 }
 </style>

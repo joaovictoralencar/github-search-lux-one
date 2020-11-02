@@ -29,6 +29,8 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+
 export default {
   props: {
     isBig: {
@@ -39,6 +41,7 @@ export default {
   data() {
     return {
       userSearch: '',
+      canSearch: true,
     }
   },
   mounted() {
@@ -50,26 +53,47 @@ export default {
     },
     async searchGithubUser() {
       // make the axios requisiton
-      await this.$axios
-        .$get(
-          'https://api.github.com/search/users?q=' +
-            this.userSearch +
-            '+in:user&per_page=100'
-        )
-        .then((resp) => {
-          this.$router.push({
-            name: 'searchResult',
-            path: '/searchResult',
-            params: {
+      this.canSearch = false
+      if (this.$route.name === 'searchResult') {
+        await this.$axios
+          .$get(
+            'https://api.github.com/search/users?q=' +
+              this.userSearch +
+              '+in:login'
+          )
+          .then((resp) => {
+            const params = {
               result: resp,
               userSearch: this.userSearch,
-            },
+            }
+            this.canSearch = true
+            this.$emit('newSearch', params)
           })
-          console.log(resp)
-        })
-        .catch((err) => {
-          console.error(err)
-        })
+          .catch((err) => {
+            console.error(err)
+          })
+      } else {
+        await this.$axios
+          .$get(
+            'https://api.github.com/search/users?q=' +
+              this.userSearch +
+              '+in:login'
+          )
+          .then((resp) => {
+            this.canSearch = true
+            this.$router.push({
+              name: 'searchResult',
+              path: '/searchResult',
+              params: {
+                result: resp,
+                userSearch: this.userSearch,
+              },
+            })
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      }
     },
   },
 }

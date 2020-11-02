@@ -45,11 +45,29 @@ html {
   font-style: italic;
   font-weight: normal;
 }
+.separator-line {
+  width: 100%;
+  height: 2px;
+  background-color: $dark-grey;
+}
 h3 {
   font-size: 1.25rem;
 }
 h4 {
   font-size: 1rem;
   font-weight: 300;
+}
+.text-1 {
+  color: $black;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.text-2 {
+  color: $black;
+  font-size: 0.75rem;
+}
+.text-3 {
+  color: $black;
+  font-size: 0.625rem;
 }
 </style>
