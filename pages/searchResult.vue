@@ -11,7 +11,7 @@
         <div role="separator" class="separator-line"></div>
       </section>
     </header>
-    <section class="content">
+    <section v-if="result.total_count > 0" class="content">
       <nav>
         <ul class="users-list">
           <UserListItem
@@ -21,6 +21,11 @@
           ></UserListItem>
         </ul>
       </nav>
+    </section>
+    <section v-else>
+      <p class="text-1">
+        Infelizmente não encontramos nenhum usuário com esse nome.
+      </p>
     </section>
   </main>
 </template>
@@ -61,7 +66,7 @@ export default {
   min-width: 460px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: left;
   text-align: left;
   flex-direction: column;
   header {
