@@ -53,47 +53,29 @@ export default {
     },
     async searchGithubUser() {
       // make the axios requisiton
-      this.canSearch = false
-      if (this.$route.name === 'searchResult') {
-        await this.$axios
-          .$get(
-            'https://api.github.com/search/users?q=' +
-              this.userSearch +
-              '+in:login'
-          )
-          .then((resp) => {
-            const params = {
-              result: resp,
-              userSearch: this.userSearch,
-            }
-            this.canSearch = true
-            this.$emit('newSearch', params)
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-      } else {
-        await this.$axios
-          .$get(
-            'https://api.github.com/search/users?q=' +
-              this.userSearch +
-              '+in:login'
-          )
-          .then((resp) => {
-            this.canSearch = true
-            this.$router.push({
-              name: 'searchResult',
-              path: '/searchResult',
-              params: {
-                result: resp,
-                userSearch: this.userSearch,
-              },
-            })
-          })
-          .catch((err) => {
-            console.error(err)
-          })
-      }
+      this.canSearch = false // prevent multiple requests
+      /* if already on searchResult page, get the new value from github */
+      await this.$axios
+        .$get(
+          'https://api.github.com/search/users?q=' +
+            this.userSearch +
+            '+in:login'
+        )
+        .then((resp) => {
+          const newUserSearch = {
+            result: resp, // result from github api
+            userSearch: this.userSearch, // string with the user typed
+          }
+          this.$store.commit('setUserSearch', newUserSearch) // save on store
+          if (this.$route.name === 'searchResult') {
+            this.canSearch = true // can make a new search
+          } else {
+            this.$router.push('/searchResult') // go to search route
+          }
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     },
   },
 }

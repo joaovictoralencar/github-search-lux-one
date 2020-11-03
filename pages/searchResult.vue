@@ -4,18 +4,25 @@
       <h2 class="title medium">
         Github <span class="title title-span-style">Search</span>
       </h2>
-      <SearchBar :is-big="false" class="search-bar" @newSearch="newSearch" />
-      <section v-if="result">
+      <SearchBar :is-big="false" class="search-bar" />
+      <section v-if="userSearch.result">
         <h3>Resultado da busca:</h3>
-        <h4>{{ result.total_count }} resultados para "{{ userSearch }}"</h4>
+        <h4>
+          {{ userSearch.result.total_count }} resultados para "{{
+            userSearch.userSearch
+          }}"
+        </h4>
         <div role="separator" class="separator-line"></div>
       </section>
     </header>
-    <section v-if="result.total_count > 0" class="content">
+    <section
+      v-if="userSearch.result && userSearch.result.total_count > 0"
+      class="content"
+    >
       <nav>
         <ul class="users-list">
           <UserListItem
-            v-for="user in users"
+            v-for="user in userSearch.result.items"
             :key="user.id"
             :user-result="user"
           ></UserListItem>
@@ -32,26 +39,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      result: '',
-      users: [],
-      userSearch: '',
-    }
-  },
-  mounted() {
-    // get the result from previous page
-    this.result = this.$route.params.result
-    // get the user search value from previous page
-    this.userSearch = this.$route.params.userSearch
-    // only define users if the search
-    if (this.result) this.users = this.result.items
-  },
-  methods: {
-    newSearch(params) {
-      this.result = params.result
-      this.userSearch = params.userSearch
-      if (this.result) this.users = this.result.items
+  computed: {
+    userSearch() {
+      return this.$store.state.userSearch
     },
   },
 }

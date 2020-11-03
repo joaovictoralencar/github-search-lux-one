@@ -4,19 +4,24 @@
       class="user-list-item-container"
       :class="!endLoading ? 'loading' : ''"
     >
-      <a v-if="endLoading" :href="'https://github.com/' + user.login">
+      <nuxt-link
+        v-if="endLoading"
+        :to="{ name: 'userInfo', params: { userDetail: user } }"
+      >
         <img
           class="user-avatar"
           :src="user.avatar_url"
           :alt="user.login + ' avatar'"
         />
-      </a>
+      </nuxt-link>
       <LoadingItem v-else class="load-image-animation" role="loading image" />
       <div v-if="endLoading" class="user-info">
         <header class="user-info-header">
-          <a :href="'https://github.com/' + user.login" class="user-name text-1"
+          <nuxt-link
+            :to="{ name: 'userInfo', params: { userDetail: user } }"
+            class="user-name text-1"
             >{{ user.login }}
-            <span v-if="user.name !== null">({{ user.name }})</span></a
+            <span v-if="user.name !== null">({{ user.name }})</span></nuxt-link
           >
           <div class="text-2">{{ user.location }}</div>
         </header>
@@ -43,9 +48,15 @@ export default {
   // fetch user information asynchronous using github api url
   async fetch() {
     if (this.userResult) {
-      this.user = await this.$axios.$get(this.userResult.url).catch((err) => {
-        console.error(err)
-      })
+      await this.$axios
+        .$get(this.userResult.url)
+        .then((resp) => {
+          this.user = resp
+          this.$store.commit('setUserDetail', this.user)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     }
   },
   data() {
