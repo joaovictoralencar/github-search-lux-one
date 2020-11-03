@@ -1,9 +1,9 @@
 <template>
   <button
-    v-if="submitButton"
     class="btn"
     :class="hoverAnim ? 'animated' : ''"
     :type="submitButton ? 'submit' : 'button'"
+    @click="onClickButton"
   >
     <slot />
   </button>
@@ -25,6 +25,11 @@ export default {
       default() {
         console.log('give-me a function')
       },
+    },
+  },
+  methods: {
+    onClickButton() {
+      this.onClick()
     },
   },
 }

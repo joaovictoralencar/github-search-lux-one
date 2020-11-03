@@ -70,4 +70,7 @@ h4 {
   color: $black;
   font-size: 0.625rem;
 }
+.text-light {
+  font-weight: 300;
+}
 </style>

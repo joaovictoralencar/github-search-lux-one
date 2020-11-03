@@ -26,12 +26,12 @@
           <div class="text-2">{{ user.location }}</div>
         </header>
         <p class="text-2">Repositórios públicos: {{ user.public_repos }}</p>
-        <p class="text-2">Seguidores {{ user.followers }}</p>
+        <p class="text-2">Seguidores: {{ user.followers }}</p>
         <p class="text-2">Seguindo: {{ user.following }}</p>
       </div>
       <LoadingItem v-else class="load-info-animation" role="loading info" />
     </section>
-    <div class="separator-line"></div>
+    <div class="separator-line" role="separator"></div>
   </li>
 </template>
 
@@ -52,7 +52,6 @@ export default {
         .$get(this.userResult.url)
         .then((resp) => {
           this.user = resp
-          this.$store.commit('setUserDetail', this.user)
         })
         .catch((err) => {
           console.error(err)
