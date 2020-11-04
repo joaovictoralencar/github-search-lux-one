@@ -103,6 +103,7 @@ export default {
         console.error(err)
       })
   },
+  fetchOnServer: false,
   data() {
     return {
       userChoosen: null,
