@@ -47,6 +47,7 @@ export default {
   },
   // fetch user information asynchronous using github api url
   async fetch() {
+    console.log(this.userResult)
     if (this.userResult) {
       await this.$axios
         .$get(this.userResult.url)
