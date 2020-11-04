@@ -145,7 +145,7 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   width: 100%;
-  min-width: 260px;
+  min-width: 460px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -248,6 +248,7 @@ export default {
   .detail-text {
     font-size: 0.875rem;
     font-weight: 300;
+    text-align: left;
     &.bio {
       max-height: 120px;
     }
@@ -260,7 +261,7 @@ export default {
     top: 36px;
     @include flex-center();
     align-self: flex-end;
-    outline: 2px solid $black;
+    @include outline-box();
     background-color: $white;
     .text-3 {
       font-family: Roboto Mono;
@@ -272,6 +273,21 @@ export default {
       width: 24px;
       height: 24px;
       margin: 5px 8px;
+    }
+  }
+}
+@media screen and (max-width: 720px) {
+  .container {
+    .user-detail-personal {
+      flex-direction: column;
+    }
+    .user-info,
+    .bio {
+      max-height: none !important;
+    }
+    .see-on-git-btn {
+      top: -10px;
+      align-self: center;
     }
   }
 }
