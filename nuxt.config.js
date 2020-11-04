@@ -1,3 +1,4 @@
+require('dotenv').config()
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -17,7 +18,7 @@ export default {
   target: 'static',
 
   env: {
-    TOKEN: process.env.TOKEN,
+    TOKEN_ACCESS: process.env.TOKEN_ACCESS,
   },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
