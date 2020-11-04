@@ -15,13 +15,13 @@
         :class="!endLoading ? 'loading' : ''"
       >
         <img
-          v-if="endLoading"
+          v-if="endLoading && user"
           class="user-avatar"
           :src="user.avatar_url"
           :alt="user.login + ' avatar'"
         />
         <LoadingItem v-else class="load-image-animation" role="loading image" />
-        <div v-if="endLoading" class="user-info">
+        <div v-if="endLoading && user" class="user-info">
           <header class="user-info-header">
             <h2 class="user-name">{{ user.login }}</h2>
             <h3 v-if="user.name !== null" class="text-light">
