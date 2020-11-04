@@ -52,6 +52,7 @@ export default {
         .$get(this.userResult.url)
         .then((resp) => {
           this.user = resp
+          console.log(this.user)
         })
         .catch((err) => {
           console.error(err)
@@ -68,9 +69,10 @@ export default {
       return this.user !== null
     },
   },
-  mounted() {
+  created() {
     this.$axios.setHeader('Authorization', 'token ' + process.env.TOKEN_ACCESS)
   },
+  mounted() {},
 }
 </script>
 

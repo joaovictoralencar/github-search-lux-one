@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     onClickButton() {
-      this.onClick()
+      if (this.onClick) this.onClick()
     },
   },
 }
