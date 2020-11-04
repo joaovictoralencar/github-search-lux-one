@@ -13,7 +13,12 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+
   target: 'static',
+
+  env: {
+    TOKEN: process.env.TOKEN,
+  },
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
