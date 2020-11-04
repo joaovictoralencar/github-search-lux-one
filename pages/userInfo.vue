@@ -29,7 +29,7 @@
             </h3>
           </header>
           <section class="user-info-body">
-            <p class="detail-text">{{ user.bio }}</p>
+            <p class="detail-text ellipsis-text-line">{{ user.bio }}</p>
             <div class="separator-line" role="separator"></div>
             <div class="user-info-item">
               <div class="social-numbers">
@@ -38,10 +38,10 @@
                   alt="ícone de comunidade"
                 />
                 <p class="detail-text social-item">
-                  {{ user.followers }} Seguidores
+                  <b> {{ user.followers }} </b> Seguidores
                 </p>
                 <p class="detail-text social-item">
-                  {{ user.following }} Seguindo
+                  <b>{{ user.following }}</b> Seguindo
                 </p>
               </div>
             </div>
@@ -74,31 +74,60 @@
         <LoadingItem v-else class="load-info-animation" role="loading info" />
       </section>
       <div class="separator-line big" role="separator"></div>
-      <section class="user-detail-repositories">
-        <h3>Reposiórios Públicos 40</h3>
+      <section v-if="repositories" class="user-detail-repositories">
+        <h3 class="repos-header">
+          Reposiórios Públicos -
+          <span class="text-light">{{ repositories.length }}</span>
+        </h3>
+        <section class="repos-container">
+          {{ repositories[0].language }}
+        </section>
       </section>
+      <LoadingItem v-else class="load-info-animation" role="loading info" />
     </section>
   </main>
 </template>
 
 <script>
+/* eslint-disable no-console */
+
 export default {
+  async fetch() {
+    if (this.user) {
+      await this.$axios
+        .$get(this.user.repos_url)
+        .then((resp) => {
+          this.userRepositories = resp
+          this.$store.commit('setRepositories', resp)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    }
+  },
   data() {
     return {
       userChoosen: null,
+      userRepositories: null,
     }
   },
   computed: {
     user() {
       return this.userChoosen
     },
+    repositories() {
+      return this.userRepositories
+    },
     endLoading() {
       return this.user !== null
     },
   },
-  mounted() {
+  created() {
     this.$store.commit('setUserDetail', this.$route.params.userDetail)
     this.userChoosen = this.$store.state.userDetail
+  },
+  mounted() {
+    this.$axios.setHeader('Authorization', 'token ' + process.env.TOKEN_ACCESS)
   },
   methods: {
     seeOnGit() {
@@ -193,6 +222,22 @@ export default {
     }
     &.loading {
       align-items: center;
+    }
+  }
+  .user-detail-repositories {
+    @include flex-center-col();
+    width: 100%;
+    height: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+    .repos-header {
+      margin-bottom: 16px;
+    }
+    .repos-container {
+      outline: 2px solid $black;
+      width: 100%;
+      height: 100%;
     }
   }
   .separator-line.big {
