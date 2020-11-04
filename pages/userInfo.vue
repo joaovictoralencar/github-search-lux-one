@@ -93,17 +93,15 @@
 
 export default {
   async fetch() {
-    if (this.user) {
-      await this.$axios
-        .$get(this.user.repos_url)
-        .then((resp) => {
-          this.userRepositories = resp
-          this.$store.commit('setRepositories', resp)
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-    }
+    await this.$axios
+      .$get(this.user.repos_url)
+      .then((resp) => {
+        this.userRepositories = resp
+        this.$store.commit('setRepositories', resp)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   },
   data() {
     return {

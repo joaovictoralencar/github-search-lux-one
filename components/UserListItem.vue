@@ -47,18 +47,14 @@ export default {
   },
   // fetch user information asynchronous using github api url
   async fetch() {
-    console.log(this.userResult)
-    if (this.userResult) {
-      await this.$axios
-        .$get(this.userResult.url)
-        .then((resp) => {
-          this.user = resp
-          console.log(this.user)
-        })
-        .catch((err) => {
-          console.error(err)
-        })
-    }
+    await this.$axios
+      .$get(this.userResult.url)
+      .then((resp) => {
+        this.user = resp
+      })
+      .catch((err) => {
+        console.error(err)
+      })
   },
   data() {
     return {
