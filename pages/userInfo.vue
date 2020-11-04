@@ -100,8 +100,7 @@ export default {
     await this.$axios
       .$get(this.user.repos_url)
       .then((resp) => {
-        this.userRepositories = resp
-        this.$store.commit('setRepositories', resp)
+        this.userRepositories = resp // save repositories
       })
       .catch((err) => {
         console.error(err)
@@ -126,8 +125,14 @@ export default {
     },
   },
   created() {
-    this.$store.commit('setUserDetail', this.$route.params.userDetail)
-    this.userChoosen = this.$store.state.userDetail
+    // if there are parameters (user) on the route, save on store
+    if (this.$route.params.userDetail) {
+      this.$store.commit('setUserDetail', this.$route.params.userDetail) // save on store
+      this.userChoosen = this.$store.state.userDetail // save on page
+      this.$cookies.set('user-detail', this.userChoosen) // save cookie
+    } else {
+      this.userChoosen = this.$cookies.get('user-detail') // try to get from cookie
+    }
   },
   mounted() {
     this.$axios.setHeader('Authorization', 'token ' + process.env.TOKEN_ACCESS)

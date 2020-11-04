@@ -15,33 +15,67 @@
         <div role="separator" class="separator-line"></div>
       </section>
     </header>
-    <section
-      v-if="userSearch.result && userSearch.result.total_count > 0"
-      class="content"
-    >
-      <nav>
-        <ul class="users-list">
-          <UserListItem
-            v-for="user in userSearch.result.items"
-            :key="user.id"
-            :user-result="user"
-          ></UserListItem>
-        </ul>
-      </nav>
-    </section>
-    <section v-else>
-      <p class="text-1">
-        Infelizmente não encontramos nenhum usuário com esse nome.
-      </p>
-    </section>
+    <div v-if="userSearch.result">
+      <section v-if="userSearch.result.total_count > 0" class="content">
+        <nav>
+          <ul class="users-list">
+            <UserListItem
+              v-for="user in userSearch.result.items"
+              :key="user.id"
+              :user-result="user"
+            ></UserListItem>
+          </ul>
+        </nav>
+      </section>
+      <section v-else>
+        <p class="text-1">
+          Infelizmente não encontramos nenhum usuário com esse nome.
+        </p>
+      </section>
+    </div>
   </main>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      userTextSearch: null,
+    }
+  },
   computed: {
     userSearch() {
       return this.$store.state.userSearch
+    },
+  },
+  mounted() {
+    // if there no userSearch
+    if (!this.userSearch) {
+      this.userTextSearch = this.$cookies.get('user-search')
+      this.searchGithubUser()
+    }
+  },
+  methods: {
+    async searchGithubUser() {
+      // make the axios requisiton
+      this.canSearch = false // prevent multiple requests
+      /* if already on searchResult page, get the new value from github */
+      await this.$axios
+        .$get(
+          'https://api.github.com/search/users?q=' +
+            this.userTextSearch +
+            '+in:login'
+        )
+        .then((resp) => {
+          const newUserSearch = {
+            result: resp, // result from github api
+            userSearch: this.userTextSearch, // string with the user typed
+          }
+          this.$store.commit('setUserSearch', newUserSearch) // save on store
+        })
+        .catch((err) => {
+          console.error(err)
+        })
     },
   },
 }

@@ -41,6 +41,7 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/style-resources',
     '@nuxtjs/axios',
+    'cookie-universal-nuxt',
   ],
   styleResources: {
     scss: ['./assets/styles/*.scss'],

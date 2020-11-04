@@ -10,7 +10,7 @@
       </span>
       <h3 class="text-1">{{ repository.name }}</h3>
       <span class="see-on-github-btn-container">
-        <Button class="see-on-github-btn">
+        <Button class="see-on-github-btn" :on-click="seeOnGit">
           <img src="~/assets/images/icons/github-icon.svg" alt="github icon" />
         </Button>
       </span>
@@ -63,6 +63,9 @@ export default {
       const m = date.substring(5, 7)
       const d = date.substring(8, 10)
       return d + '/' + m + '/' + y
+    },
+    seeOnGit() {
+      window.open(this.repository.html_url)
     },
   },
 }
