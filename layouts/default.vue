@@ -4,10 +4,9 @@
   </div>
 </template>
 
-<style>
+<style lang="scss">
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: Roboto Mono !important;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -23,33 +22,60 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 5vw;
+  }
 }
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+.title {
+  font-family: Roboto Mono;
+  font-style: normal;
+  font-weight: bold;
+  color: #000000;
+  margin-bottom: 7px;
+  &.big {
+    font-size: 4rem;
+  }
+  &.medium {
+    font-size: 2.5rem;
+    text-align: left;
+  }
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+.title-span-style {
+  font-style: italic;
+  font-weight: normal;
 }
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+.separator-line {
+  width: 100%;
+  height: 2px;
+  background-color: $dark-grey;
+}
+h3 {
+  font-size: 1.25rem;
+}
+h4 {
+  font-size: 1rem;
+  font-weight: 300;
+}
+.text-1 {
+  color: $black;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.text-2 {
+  color: $black;
+  font-size: 0.75rem;
+}
+.text-3 {
+  color: $black;
+  font-size: 0.625rem;
+}
+.text-light {
+  font-weight: 300;
+}
+.ellipsis-text-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
