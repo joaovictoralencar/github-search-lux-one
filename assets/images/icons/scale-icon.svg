@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="scale" transform="translate(0.223 0.223)">
+    <rect id="Retângulo_16" data-name="Retângulo 16" width="16" height="16" transform="translate(-0.223 -0.223)" fill="none"/>
+    <path id="Caminho_9" data-name="Caminho 9" d="M13.766,46a.769.769,0,0,0-.766.771v.15h7.37v-.15A.769.769,0,0,0,19.6,46Z" transform="translate(-8.908 -31.773)" stroke="#000" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Caminho_10" data-name="Caminho 10" d="M23,1.614a.614.614,0,0,1,1.228,0V14.82H23Z" transform="translate(-15.837 -0.593)" fill="none" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Caminho_11" data-name="Caminho 11" d="M33,32a2.733,2.733,0,0,0,4.914,0Z" transform="translate(-22.766 -22.073)" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Caminho_12" data-name="Caminho 12" d="M13.4,2.166c-.683-.375-1.253-1.018-1.973-1.142a4.117,4.117,0,0,0-2.2.557" transform="translate(-6.296 -0.593)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Caminho_13" data-name="Caminho 13" d="M31.37,5.423a4.113,4.113,0,0,0-1.883-1.259,7.886,7.886,0,0,0-2.282.424" transform="translate(-18.75 -2.77)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Caminho_14" data-name="Caminho 14" d="M37.914,16.063,35.457,9,33,16.063" transform="translate(-22.766 -6.136)" fill="none" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Caminho_15" data-name="Caminho 15" d="M1,26a2.607,2.607,0,0,0,2.457,1.536A2.607,2.607,0,0,0,5.914,26Z" transform="translate(-0.593 -17.915)" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+    <path id="Caminho_16" data-name="Caminho 16" d="M5.914,10.063,3.457,3,1,10.063" transform="translate(-0.593 -1.979)" fill="none" stroke="#000" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+  </g>
+</svg>

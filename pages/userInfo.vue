@@ -29,7 +29,7 @@
             </h3>
           </header>
           <section class="user-info-body">
-            <p class="detail-text ellipsis-text-line">{{ user.bio }}</p>
+            <p class="detail-text ellipsis-text-line bio">{{ user.bio }}</p>
             <div class="separator-line" role="separator"></div>
             <div class="user-info-item">
               <div class="social-numbers">
@@ -80,7 +80,11 @@
           <span class="text-light">{{ repositories.length }}</span>
         </h3>
         <section class="repos-container">
-          {{ repositories[0].language }}
+          <RepositoryView
+            v-for="(repository, index) in repositories"
+            :key="index"
+            :repository="repository"
+          />
         </section>
       </section>
       <LoadingItem v-else class="load-info-animation" role="loading info" />
@@ -234,7 +238,6 @@ export default {
       margin-bottom: 16px;
     }
     .repos-container {
-      outline: 2px solid $black;
       width: 100%;
       height: 100%;
     }
@@ -245,6 +248,9 @@ export default {
   .detail-text {
     font-size: 0.875rem;
     font-weight: 300;
+    &.bio {
+      max-height: 120px;
+    }
   }
   .see-on-git-btn {
     width: 100%;

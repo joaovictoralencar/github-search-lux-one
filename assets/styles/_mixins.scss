@@ -12,3 +12,6 @@
   @include flex-center();
   flex-direction: column;
 };
+@mixin outline-box(){
+  outline: 2px solid $black;
+};
