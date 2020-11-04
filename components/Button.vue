@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     onClickButton() {
-      if (this.onClick) this.onClick()
+      if (!this.submitButton) this.onClick()
     },
   },
 }
