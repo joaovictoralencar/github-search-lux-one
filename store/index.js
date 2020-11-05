@@ -10,7 +10,4 @@ export const mutations = {
   setUserDetail(state, user) {
     state.userDetail = user
   },
-  setRepositories(state, repositories) {
-    state.userDetail = repositories
-  },
 }

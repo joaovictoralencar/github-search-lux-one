@@ -29,7 +29,7 @@
             </h3>
           </header>
           <section class="user-info-body">
-            <p class="detail-text ellipsis-text-line">{{ user.bio }}</p>
+            <p class="detail-text ellipsis-text-line bio">{{ user.bio }}</p>
             <div class="separator-line" role="separator"></div>
             <div class="user-info-item">
               <div class="social-numbers">
@@ -77,13 +77,25 @@
       <section v-if="repositories" class="user-detail-repositories">
         <h3 class="repos-header">
           Reposiórios Públicos -
-          <span class="text-light">{{ repositories.length }}</span>
+          <span class="text-light">{{ user.public_repos }}</span>
         </h3>
         <section class="repos-container">
-          {{ repositories[0].language }}
+          <RepositoryView
+            v-for="(repository, index) in repositories"
+            :key="index"
+            :repository="repository"
+          />
         </section>
       </section>
       <LoadingItem v-else class="load-info-animation" role="loading info" />
+      <footer class="user-detail-footer">
+        <PageController
+          v-if="repositories"
+          :total-items="user.public_repos"
+          pages-type="repos"
+          @reposPages="changePage"
+        ></PageController>
+      </footer>
     </section>
   </main>
 </template>
@@ -94,10 +106,9 @@
 export default {
   async fetch() {
     await this.$axios
-      .$get(this.user.repos_url)
+      .$get(this.user.repos_url + '?page=' + this.page)
       .then((resp) => {
-        this.userRepositories = resp
-        this.$store.commit('setRepositories', resp)
+        this.userRepositories = resp // save repositories
       })
       .catch((err) => {
         console.error(err)
@@ -108,6 +119,7 @@ export default {
     return {
       userChoosen: null,
       userRepositories: null,
+      page: 1,
     }
   },
   computed: {
@@ -122,8 +134,14 @@ export default {
     },
   },
   created() {
-    this.$store.commit('setUserDetail', this.$route.params.userDetail)
-    this.userChoosen = this.$store.state.userDetail
+    // if there are parameters (user) on the route, save on store
+    if (this.$route.params.userDetail) {
+      this.$store.commit('setUserDetail', this.$route.params.userDetail) // save on store
+      this.userChoosen = this.$store.state.userDetail // save on page
+      this.$cookies.set('user-detail', this.userChoosen) // save cookie
+    } else {
+      this.userChoosen = this.$cookies.get('user-detail') // try to get from cookie
+    }
   },
   mounted() {
     this.$axios.setHeader('Authorization', 'token ' + process.env.TOKEN_ACCESS)
@@ -131,6 +149,10 @@ export default {
   methods: {
     seeOnGit() {
       window.open(this.user.html_url)
+    },
+    changePage(e) {
+      this.page = e
+      this.$fetch()
     },
   },
 }
@@ -141,7 +163,7 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   width: 100%;
-  min-width: 260px;
+  min-width: 460px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -149,7 +171,6 @@ export default {
   flex-direction: column;
   .user-detail-container {
     width: 100%;
-    height: 100vh;
     max-width: 860px;
     @include flex-center-col();
     padding: 30px 20px 0 20px;
@@ -234,7 +255,6 @@ export default {
       margin-bottom: 16px;
     }
     .repos-container {
-      outline: 2px solid $black;
       width: 100%;
       height: 100%;
     }
@@ -245,6 +265,10 @@ export default {
   .detail-text {
     font-size: 0.875rem;
     font-weight: 300;
+    text-align: left;
+    &.bio {
+      max-height: 120px;
+    }
   }
   .see-on-git-btn {
     width: 100%;
@@ -254,7 +278,7 @@ export default {
     top: 36px;
     @include flex-center();
     align-self: flex-end;
-    outline: 2px solid $black;
+    @include outline-box();
     background-color: $white;
     .text-3 {
       font-family: Roboto Mono;
@@ -266,6 +290,24 @@ export default {
       width: 24px;
       height: 24px;
       margin: 5px 8px;
+    }
+  }
+  .user-detail-footer {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 720px) {
+  .container {
+    .user-detail-personal {
+      flex-direction: column;
+    }
+    .user-info,
+    .bio {
+      max-height: none !important;
+    }
+    .see-on-git-btn {
+      top: -10px;
+      align-self: center;
     }
   }
 }

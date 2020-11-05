@@ -46,6 +46,10 @@ export default {
   },
   mounted() {
     this.$axios.setHeader('Authorization', 'token ' + process.env.TOKEN_ACCESS)
+    this.$on('search-user', (userSearch) => {
+      this.userSearch = userSearch
+      this.searchGithubUser()
+    })
   },
   methods: {
     onSubmit() {
@@ -67,6 +71,7 @@ export default {
             userSearch: this.userSearch, // string with the user typed
           }
           this.$store.commit('setUserSearch', newUserSearch) // save on store
+          this.$cookies.set('user-search', newUserSearch.userSearch)
           if (this.$route.name === 'searchResult') {
             this.canSearch = true // can make a new search
           } else {

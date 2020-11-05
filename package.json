@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/dotenv": "^1.4.1",
+    "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.6.5",
     "fibers": "^5.0.0",
     "node-gyp": "^3.8.0",

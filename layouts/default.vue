@@ -74,7 +74,6 @@ h4 {
   font-weight: 300;
 }
 .ellipsis-text-line {
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
