@@ -77,7 +77,7 @@
       <section v-if="repositories" class="user-detail-repositories">
         <h3 class="repos-header">
           Reposiórios Públicos -
-          <span class="text-light">{{ repositories.length }}</span>
+          <span class="text-light">{{ user.public_repos }}</span>
         </h3>
         <section class="repos-container">
           <RepositoryView
@@ -88,6 +88,14 @@
         </section>
       </section>
       <LoadingItem v-else class="load-info-animation" role="loading info" />
+      <footer class="user-detail-footer">
+        <PageController
+          v-if="repositories"
+          :total-items="user.public_repos"
+          pages-type="repos"
+          @reposPages="changePage"
+        ></PageController>
+      </footer>
     </section>
   </main>
 </template>
@@ -98,7 +106,7 @@
 export default {
   async fetch() {
     await this.$axios
-      .$get(this.user.repos_url)
+      .$get(this.user.repos_url + '?page=' + this.page)
       .then((resp) => {
         this.userRepositories = resp // save repositories
       })
@@ -111,6 +119,7 @@ export default {
     return {
       userChoosen: null,
       userRepositories: null,
+      page: 1,
     }
   },
   computed: {
@@ -141,6 +150,10 @@ export default {
     seeOnGit() {
       window.open(this.user.html_url)
     },
+    changePage(e) {
+      this.page = e
+      this.$fetch()
+    },
   },
 }
 </script>
@@ -158,7 +171,6 @@ export default {
   flex-direction: column;
   .user-detail-container {
     width: 100%;
-    height: 100vh;
     max-width: 860px;
     @include flex-center-col();
     padding: 30px 20px 0 20px;
@@ -279,6 +291,9 @@ export default {
       height: 24px;
       margin: 5px 8px;
     }
+  }
+  .user-detail-footer {
+    width: 100%;
   }
 }
 @media screen and (max-width: 720px) {

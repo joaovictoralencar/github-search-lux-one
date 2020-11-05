@@ -32,6 +32,14 @@
           Infelizmente não encontramos nenhum usuário com esse nome.
         </p>
       </section>
+      <footer v-if="userSearch.result" class="user-search-footer">
+        <PageController
+          v-if="userSearch.result.items"
+          :total-items="userSearch.result.total_count"
+          pages-type="users"
+          @usersPages="changePage"
+        ></PageController>
+      </footer>
     </div>
   </main>
 </template>
@@ -41,6 +49,7 @@ export default {
   data() {
     return {
       userTextSearch: null,
+      page: 1,
     }
   },
   computed: {
@@ -64,7 +73,8 @@ export default {
         .$get(
           'https://api.github.com/search/users?q=' +
             this.userTextSearch +
-            '+in:login'
+            '+in:login&page=' +
+            this.page
         )
         .then((resp) => {
           const newUserSearch = {
@@ -76,6 +86,11 @@ export default {
         .catch((err) => {
           console.error(err)
         })
+    },
+    changePage(e) {
+      this.page = e
+      this.userTextSearch = this.userSearch.userSearch
+      this.searchGithubUser()
     },
   },
 }
@@ -109,6 +124,9 @@ export default {
     list-style-type: none;
     margin: 0;
     padding: 0;
+  }
+  .user-search-footer {
+    width: 100%;
   }
 }
 </style>
