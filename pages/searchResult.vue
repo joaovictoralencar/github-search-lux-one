@@ -10,7 +10,7 @@
         <h4>
           {{ userSearch.result.total_count }} resultados para "{{
             userSearch.userSearch
-          }}"
+          }}" (máximo de usuários exibidos: 1000)
         </h4>
         <div role="separator" class="separator-line"></div>
       </section>

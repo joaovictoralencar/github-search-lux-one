@@ -64,7 +64,9 @@ export default {
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.totalItems / 30)
+      let totalPages = Math.ceil(this.totalItems / 30)
+      if (totalPages > 34) totalPages = 34
+      return totalPages
     },
   },
   methods: {
